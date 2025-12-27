@@ -6,12 +6,14 @@ import { HexFeedback } from "../value-objects/HexFeedback";
 
 
 export class Hexadle{
+    private readonly _id: string;
     private _status: GameStatus;
     private static readonly MAX_LIVES = 5;
     private readonly hexSecret: HexCode;
     private attempts: HexCode[];
 
-    constructor(secret: HexCode){;
+    constructor(id: string, secret: HexCode){
+        this._id = id;
         this._status = GameStatus.PLAYING;
         this.hexSecret = secret;
         this.attempts = []

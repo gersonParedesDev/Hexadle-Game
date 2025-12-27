@@ -7,11 +7,12 @@ import { HexFeedback } from "../value-objects/HexFeedback";
 
 describe("Hexadle game", () => {
     let hexSecret: HexCode;
-    let game: Hexadle;
+    let game: Hexadle; 
 
     beforeEach(() => {
+        const id: string = "test-123"
         hexSecret = new HexCode("A10");
-        game = new Hexadle(hexSecret);
+        game = new Hexadle(id, hexSecret);
     });
 
     test("deberia guardar el intento en el historial y descontar una vida", () => {
@@ -34,8 +35,9 @@ describe("Hexadle game", () => {
     });
 
     test("It should return the correct feedback (colors) after an attempt", () => {
+        const id: string = "test-123";
         const secreto = new HexCode("A10"); 
-        const game = new Hexadle(secreto);
+        const game = new Hexadle(id, secreto);
         const attempt = new HexCode("AF0");
 
         const resultado = game.sendAttempt(attempt);
@@ -50,8 +52,9 @@ describe("Hexadle game", () => {
     });
 
     test("deberia marcar el juego como GANADOR si el intento es igual al secreto", () => {
+        const id: string = "test-123";
         const secreto = new HexCode("C0FFEE");
-        const game = new Hexadle(secreto);
+        const game = new Hexadle(id, secreto);
         const intentoGanador = new HexCode("C0FFEE");
 
         const feedback = game.sendAttempt(intentoGanador);
