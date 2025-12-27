@@ -4,18 +4,36 @@ import { HexFeedback } from "../entities/value-objects/HexFeedback";
 
 export class HexComparator {
     static compare(secret: HexCode, attempt: HexCode): HexFeedback[] {
-        const feedback: HexFeedback[] = [];
-        const secretValue = secret.value;
-        const attemptValue = attempt.value;
+        const secretStr = secret.value;
+        const attemptStr = attempt.value;
+        const size = secretStr.length;
 
-        for (let i = 0; i < secretValue.length; i++) {
-            if (secretValue[i] === attemptValue[i]) {
-                feedback.push(HexFeedback.CORRECT);
-            } else {
-                feedback.push(HexFeedback.ABSENT);
+        const feedback: HexFeedback[] = new Array(size).fill(HexFeedback.ABSENT);
+
+        const secretAvailableCount: Record<string, number> = {};
+
+        for (const char of secretStr) {
+            secretAvailableCount[char] = (secretAvailableCount[char] || 0) + 1;
+        }
+
+        for (let i = 0; i < size; i++) {
+                if (attemptStr[i] === secretStr[i]) {
+                    feedback[i] = HexFeedback.CORRECT;
+                    secretAvailableCount[attemptStr[i]]--;
+                }
+        }
+
+        for (let i = 0; i < size; i++) {
+            if (feedback[i] === HexFeedback.CORRECT) continue;
+
+            const letter = attemptStr[i];
+            
+            if (secretAvailableCount[letter] > 0) {
+                feedback[i] = HexFeedback.PRESENT;
+                secretAvailableCount[letter]--;
             }
         }
-        // falta implementar el PRESENT color amarillo
+
         return feedback;
     }
 }
