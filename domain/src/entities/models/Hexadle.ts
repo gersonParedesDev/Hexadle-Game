@@ -19,6 +19,7 @@ export class Hexadle{
         this.attempts = []
     }
 
+    get id(): string { return this._id; }
     get status(): GameStatus { return this._status; }
     get attemptsCount(): number { return this.attempts.length; }
     get lives(): number { return Hexadle.MAX_LIVES - this.attempts.length; }
