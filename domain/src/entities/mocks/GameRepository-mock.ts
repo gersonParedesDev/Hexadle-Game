@@ -1,5 +1,5 @@
-import { GameRepository } from "../../ports/GameRepository";
-import { Hexadle } from "../models/Hexadle";
+import { GameRepository } from "../../ports/GameRepository.js";
+import { Hexadle } from "../models/Hexadle.js";
 
 export class GameRepositoryMock implements GameRepository {
     public games: Hexadle[] = []; 

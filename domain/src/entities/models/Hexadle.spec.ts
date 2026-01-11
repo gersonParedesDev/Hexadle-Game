@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, test } from "vitest";
-import { HexCode } from "../value-objects/HexCode";
-import { Hexadle } from "./Hexadle";
-import { GameStatus } from "../value-objects/GameStatus";
-import { GameOverError } from "../../errors/GameOverError";
-import { HexFeedback } from "../value-objects/HexFeedback";
+import { HexCode } from "../value-objects/HexCode.js";
+import { Hexadle } from "./Hexadle.js";
+import { GameStatus } from "../value-objects/GameStatus.js";
+import { GameOverError } from "../../errors/GameOverError.js";
+import { HexFeedback } from "../value-objects/HexFeedback.js";
 
 describe("Hexadle game", () => {
     let hexSecret: HexCode;

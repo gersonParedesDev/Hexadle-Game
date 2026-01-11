@@ -1,7 +1,7 @@
-import { Hexadle } from "../entities/models/Hexadle";
+import { Hexadle } from "../entities/models/Hexadle.js";
 import { randomUUID } from "crypto";
-import { GameRepository } from "../ports/GameRepository";
-import { SecretGenerator } from "../ports/SecretGenerator";
+import { GameRepository } from "../ports/GameRepository.js";
+import { SecretGenerator } from "../ports/SecretGenerator.js";
 
 export class StartNewGame {
     constructor(

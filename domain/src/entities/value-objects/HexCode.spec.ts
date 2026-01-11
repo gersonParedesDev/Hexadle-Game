@@ -1,6 +1,5 @@
 import { describe, test, expect } from "vitest"
-import { HexCode } from "./HexCode";
-import { HexFeedback } from "./HexFeedback";
+import { HexCode } from "./HexCode.js";
 
 describe("Hexcode", () => {
     test("It should throw an error if it is not of length 1 to 8", () => {

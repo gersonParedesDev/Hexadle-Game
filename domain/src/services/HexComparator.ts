@@ -1,5 +1,5 @@
-import { HexCode } from "../entities/value-objects/HexCode";
-import { HexFeedback } from "../entities/value-objects/HexFeedback";
+import { HexCode } from "../entities/value-objects/HexCode.js";
+import { HexFeedback } from "../entities/value-objects/HexFeedback.js";
 
 
 export class HexComparator {

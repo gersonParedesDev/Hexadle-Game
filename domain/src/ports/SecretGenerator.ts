@@ -1,4 +1,4 @@
-import { HexCode } from "../entities/value-objects/HexCode"
+import { HexCode } from "../entities/value-objects/HexCode.js"
 
 export interface SecretGenerator {
     generate(): HexCode;

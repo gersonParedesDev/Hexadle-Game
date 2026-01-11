@@ -1,8 +1,8 @@
-import { GameOverError } from "../../errors/GameOverError";
-import { HexComparator } from "../../services/HexComparator";
-import { GameStatus } from "../value-objects/GameStatus";
-import { HexCode } from "../value-objects/HexCode";
-import { HexFeedback } from "../value-objects/HexFeedback";
+import { GameOverError } from "../../errors/GameOverError.js";
+import { HexComparator } from "../../services/HexComparator.js";
+import { GameStatus } from "../value-objects/GameStatus.js";
+import { HexCode } from "../value-objects/HexCode.js";
+import { HexFeedback } from "../value-objects/HexFeedback.js";
 
 
 export class Hexadle{

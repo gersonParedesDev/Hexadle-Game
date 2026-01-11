@@ -1,7 +1,7 @@
 import { test, expect, describe, beforeEach} from "vitest"
-import { GameRepositoryMock } from "../entities/mocks/GameRepository-mock";
-import { SecretGeneratorMock } from "../entities/mocks/SecretGenerator-mock";
-import { StartNewGame } from "./StartNewGame";
+import { GameRepositoryMock } from "../entities/mocks/GameRepository-mock.js";
+import { SecretGeneratorMock } from "../entities/mocks/SecretGenerator-mock.js";
+import { StartNewGame } from "./StartNewGame.js";
 
 describe("Start new game Use case", () => {
     let gameRepo: GameRepositoryMock;

@@ -1,7 +1,7 @@
 import { describe, test, expect } from "vitest";
-import { HexComparator } from "./HexComparator";
-import { HexCode } from "../entities/value-objects/HexCode";
-import { HexFeedback } from "../entities/value-objects/HexFeedback";
+import { HexComparator } from "./HexComparator.js";
+import { HexCode } from "../entities/value-objects/HexCode.js";
+import { HexFeedback } from "../entities/value-objects/HexFeedback.js";
 
 describe("HexComparator Service", () => {
     test("It should return CORRECT (Green) for exact matches", () => {
