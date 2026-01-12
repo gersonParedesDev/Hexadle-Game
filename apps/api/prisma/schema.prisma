@@ -16,7 +16,7 @@ datasource db {
 model GameModel {
   id        String   @id
   secret    String   
-  attempts  String
+  attempts  String[]
   lives     Int      
   status    String   
   createdAt DateTime @default(now())
