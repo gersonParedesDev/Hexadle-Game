@@ -18,7 +18,7 @@ describe("PrismaGameRepository (Integration)", () => {
     });
 
     test("deberia guardar un juego y luego encontrarlo por su ID", async () => {
-        const id = "test-game-id" + Date.now();
+        const id = "test-game-id"
         const secret = new HexCode("A1B2C3");
 
         const newGame = new Hexadle(id, secret);
@@ -32,4 +32,12 @@ describe("PrismaGameRepository (Integration)", () => {
         expect(foundGame?.hexSecret).toBe("A1B2C3");
         expect(foundGame).toBeInstanceOf(Hexadle);
     })
+
+    afterAll(async () => {
+        await prisma.gameModel.deleteMany({
+            where: {
+                id: { startsWith: 'test-game-id' }
+            }
+        });
+    });
 })
