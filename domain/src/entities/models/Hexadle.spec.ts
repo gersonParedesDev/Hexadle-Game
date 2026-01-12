@@ -15,15 +15,16 @@ describe("Hexadle game", () => {
         game = new Hexadle(id, hexSecret);
     });
 
-    test("deberia guardar el intento en el historial y descontar una vida", () => {
+    test("The attempt should be saved in the history and a life deducted", () => {
         const failedAttempt = new HexCode("BBBB")
         game.sendAttempt(failedAttempt);
         expect(game.status).toBe(GameStatus.PLAYING);
         expect(game.attemptsCount).toBe(1);
+        expect(game.hexSecret).toBe("A10");
         expect(game.lives).toBe(4)
     })
 
-    test("deberia lanzar un error (Game Over) si intento jugar sin vidas", () => {
+    test("It should throw an error (Game Over) if I try to play without lives", () => {
         const failedAttempt = new HexCode("AAAAA");
 
         for (let i = 0; i < 5; i++) {
@@ -46,12 +47,11 @@ describe("Hexadle game", () => {
             HexFeedback.ABSENT,
             HexFeedback.CORRECT
         ]);
-        
 
         expect(game.lives).toBe(4);
     });
 
-    test("deberia marcar el juego como GANADOR si el intento es igual al secreto", () => {
+    test("It should mark the game as WINNER if the attempt equals the secret", () => {
         const id: string = "test-123";
         const secreto = new HexCode("C0FFEE");
         const game = new Hexadle(id, secreto);
