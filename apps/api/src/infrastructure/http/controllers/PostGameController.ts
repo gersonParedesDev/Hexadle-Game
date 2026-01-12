@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { PrismaGameRepository } from "../repositories/PrismaGameRepository.js";
+import { PrismaGameRepository } from "../../repositories/PrismaGameRepository.js";
 import { StartNewGame } from "@domain/use-cases/StartNewGame.js";
-import { RandomSecretGenerator } from "../services/RandomSecretGenerator.js";
+import { RandomSecretGenerator } from "../../services/RandomSecretGenerator.js";
 
 export class PostGameController {
     async run(req: FastifyRequest, reply: FastifyReply){
