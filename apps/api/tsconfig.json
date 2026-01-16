@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    /* 1. Módulos Modernos (Para que coincida con tu "type": "module") */
+    "target": "esnext",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    
+    /* 2. LIMPIEZA (Todo lo compilado va a /dist) */
+    "outDir": "./dist",
+    
+    /* 3. EL ATAJO @DOMAIN (Crucial) */
+    "baseUrl": ".",
+    "paths": {
+      "@domain/*": ["../../domain/src/*"]
+    },
+
+    /* 4. SIN BASURA (No genera .d.ts ni mapas) */
+    "declaration": false,
+    "sourceMap": false,
+
+    /* 5. Reglas estrictas */
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true
+  },
+  
+  /* IMPORTANTE: Esto arregla el error "No inputs were found" */
+  "include": [
+    "src/**/*", 
+    "../../domain/src/**/*" 
+  ],
+  "exclude": ["node_modules", "dist"]
+}
