@@ -1,8 +1,13 @@
 import Fastify from 'fastify';
+import cors from '@fastify/cors';
 import { gameRoutes } from './routes/gameRoutes.js';
 
 const server = Fastify({
   logger: true
+});
+
+await server.register(cors, {
+  origin: true
 });
 
 server.register(gameRoutes);
