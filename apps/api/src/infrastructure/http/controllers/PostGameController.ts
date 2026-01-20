@@ -10,15 +10,17 @@ export class PostGameController {
         const startGame = new StartNewGame(repository, secret);
         
         try {
-            const gameId = await startGame.execute();
+            const { id, length, decimalValue} = await startGame.execute();
+            
             return reply.status(201).send({ 
-                id: gameId,
+                id: id,
+                length: length,
+                target: decimalValue,
                 message: 'Game started successfully' 
             });
         } catch (error) {
             console.error('Error starting game:', error);
             return reply.status(500).send({ message: 'Internal Server Error' });
         }
-    
     }
 }
