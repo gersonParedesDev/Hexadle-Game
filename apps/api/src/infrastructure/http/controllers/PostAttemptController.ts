@@ -7,31 +7,35 @@ export class PostAttemptController {
     async run(req: FastifyRequest, reply: FastifyReply) {
         const { id } = req.params as { id: string };
 
-        if (!req.body) {
-             return reply.status(400).send({ error: 'Missing request body' });
-        }
+        if (!req.body) return reply.status(400).send({ error: 'Missing request body' });
         
         const { guess } = req.body as { guess: string };
 
-        if (!guess) {
-            return reply.status(400).send({ error: 'Guess is required' });
-        }
+        if (!guess) return reply.status(400).send({ error: 'Guess is required' });
+        
         const repository = new PrismaGameRepository();
         const useCase = new SubmitGuess(repository);
 
         try {
             const feedback = await useCase.execute(id, guess);
-            return reply.status(200).send({ feedback });
+            const game = await repository.findById(id);
+
+            if (game && game.status === 'LOST') {
+                return reply.status(200).send({ 
+                    feedback,
+                    status: 'LOST',
+                    solution: game.hexSecret
+                });
+            }
+            return reply.status(200).send({ 
+                feedback,
+                status: game?.status 
+            });
 
         } catch (error) {
             if (error instanceof GameNotFoundError) {
                 return reply.status(404).send({ error: 'Game not found' });
             }
-
-            if (error instanceof Error && error.message.includes('Invalid Hex')) {
-                return reply.status(400).send({ error: error.message });
-            }
-
             console.error(error);
             return reply.status(500).send({ error: 'Internal Server Error' });
         }
