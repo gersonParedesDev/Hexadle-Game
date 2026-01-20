@@ -5,7 +5,7 @@ export class RandomSecretGenerator implements SecretGenerator {
 
     generate(): HexCode {
         const chars = '0123456789ABCDEF';
-        const min = 3;
+        const min = 2;
         const max = 6;
         
         const length = Math.floor(Math.random() * (max - min + 1)) + min;
