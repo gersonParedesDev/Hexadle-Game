@@ -2,8 +2,8 @@ export class HexCode {
     readonly value: string;
 
     constructor(value: string){
-        if(value.length < 1 || value.length > 8){
-            throw new Error("the code must be between 1 to 8 characters");
+        if(value.length < 3 || value.length > 6){
+            throw new Error("the code must be between 3 to 8 characters");
         }
         const isHex = /^[0-9A-F]+$/i.test(value);
         if (!isHex) {
