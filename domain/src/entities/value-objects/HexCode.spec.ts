@@ -2,9 +2,9 @@ import { describe, test, expect } from "vitest"
 import { HexCode } from "./HexCode.js";
 
 describe("Hexcode", () => {
-    test("It should throw an error if it is not of length 1 to 8", () => {
-        expect(() => new HexCode('1234AF132145')).toThrow("the code must be between 1 to 8 characters");
-        expect(() => new HexCode('')).toThrow("the code must be between 1 to 8 characters");
+    test("It should throw an error if it is not of length 3 to 6", () => {
+        expect(() => new HexCode('1234AF132145')).toThrow("the code must be between 3 to 6 characters");
+        expect(() => new HexCode('')).toThrow("the code must be between 3 to 6 characters");
     })
 
     test("It should throw an error if it contains letters outside the range A-F", () => {
