@@ -4,43 +4,33 @@ import { X, Zap, Target} from 'lucide-react';
 interface TipModalProps {
   isOpen: boolean;
   onClose: () => void;
-  targetNumber: string; // 👈 Recibimos el número objetivo
+  targetNumber: string;
 }
 
 export function TipModal({ isOpen, onClose, targetNumber }: TipModalProps) {
   if (!isOpen) return null;
 
-  // 👇 LÓGICA MATEMÁTICA DE "REDONDEO"
   const tipData = useMemo(() => {
     const decimal = parseInt(targetNumber, 10);
     if (isNaN(decimal)) return null;
 
-    // 1. Calculamos la magnitud (potencia base)
-    // Ejemplo: Para 40478, log16 es ~3.8. Math.floor es 3.
-    // Significa que estamos trabajando con miles (16^3 = 4096)
     const power = Math.floor(Math.log(decimal) / Math.log(16));
     const placeValue = Math.pow(16, power);
 
-    // 2. Buscamos el múltiplo más cercano (El "Vecino Redondo")
-    // 40478 / 4096 = 9.88 -> Redondeamos a 10 (A)
     const nearestMultiple = Math.round(decimal / placeValue);
-    
-    // 3. Construimos el número ancla
+
     const anchorDecimal = nearestMultiple * placeValue;
-    // Truco: convertir a Hex y rellenar con ceros si hace falta para que se vea "redondo"
-    // (Aunque multiplicar por la potencia ya nos da ceros en hex naturalmente)
     const anchorHex = anchorDecimal.toString(16).toUpperCase();
-    
-    // Dígito principal (ej: 'A')
+
     const mainDigit = anchorHex[0]; 
 
     return {
-      power,         // 3
-      placeValue,    // 4096
-      anchorDecimal, // 40960
-      anchorHex,     // A000
-      mainDigit,     // A
-      mainDigitVal: parseInt(mainDigit, 16) // 10
+      power,
+      placeValue,
+      anchorDecimal,
+      anchorHex,
+      mainDigit,
+      mainDigitVal: parseInt(mainDigit, 16)
     };
   }, [targetNumber]);
 
@@ -69,21 +59,17 @@ export function TipModal({ isOpen, onClose, targetNumber }: TipModalProps) {
         </div>
 
         <p className="text-sm text-gray-300 mb-4 leading-relaxed">
-          Tu número <strong>({targetNumber})</strong> está muy cerca de este número redondo:
+          Tu número <strong>({targetNumber})</strong> está muy cerca de este número:
         </p>
-
-        {/* TARJETA DEL NÚMERO REDONDO */}
         <div className="bg-black/40 rounded-lg border border-yellow-500/20 overflow-hidden mb-4">
-          
-          {/* Parte Superior: El Ancla Hexadecimal */}
+
           <div className="bg-yellow-500/10 p-4 text-center border-b border-yellow-500/10">
-            <span className="block text-xs text-yellow-600 uppercase font-bold mb-1">Número Hex "Redondo"</span>
+            <span className="block text-xs text-yellow-600 uppercase font-bold mb-1">Número Hex</span>
             <span className="text-4xl font-mono font-bold text-yellow-400 tracking-widest drop-shadow-sm">
               {tipData.anchorHex}
             </span>
           </div>
 
-          {/* Parte Inferior: La Explicación Matemática */}
           <div className="p-4 bg-black/20">
             <div className="flex justify-between items-center text-sm text-gray-400 mb-2">
               <span>Valor Decimal:</span>
