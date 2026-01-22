@@ -1,43 +1,100 @@
-import React from 'react';
-import Keyboard from './components/keyboard';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { Header } from './components/header';
+import { Grid } from './components/grid';
+import { Keyboard } from './components/keyboard';
+import { Modal } from './components/modals/modal';
+import { useHexadle } from './hooks/useHexadle';
+import { useState } from 'react';
+import { HelpModal } from './components/modals/helpModal';
+import { TipModal } from './components/modals/tipModal';
 
-const App: React.FC = () => {
-  
-  return (
-    <div className="overflow-y-hidden h-screen flex flex-col">
+function App() {
+  const { 
+    turn, 
+    guesses, 
+    currentGuess, 
+    feedbackHistory,
+    handleChar,
+    handleDelete, 
+    handleEnter,
+    gameStatus,
+    secretCode,
+    secretLength,
+    cursorPos,
+    isLoading,
+    handleCellClick,
+    targetNumber
+  } = useHexadle();
 
-      <header className="bg-gray-950 text-white flex items-center justify-between px-8 py-5">
-        <button className="text-gray-600 hover:text-white cursor-pointer">
-          <FontAwesomeIcon icon={faUser} />
-        </button>
-        <h1 className="text-lg font-semibold">Wordle</h1>
-        <button className="text-gray-600 hover:text-white cursor-pointer">
-          <FontAwesomeIcon icon={faChartLine} />
-        </button>
-      </header>
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [isTipOpen, setIsTipOpen] = useState(false);
 
-      <main className="flex-grow bg-gray-950 flex flex-col items-center justify-center overflow-y-auto">
-        <div className="grid grid-cols-4 gap-2 p-4 w-fit mx-auto">
-          {Array.from({ length: 16 }).map((_, index) => (
-            <div
-              key={index}
-              className="w-16 h-16 bg-gray-950 border-2 border-gray-600 rounded-sm
-                flex items-center justify-center cursor-pointer
-                text-white font-extrabold text-2xl"
-            >
-              
-            </div>
-          ))}
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+        <div className="animate-pulse text-xl font-mono text-purple-400">
+          CONNECT...
         </div>
+      </div>
+    );
+  }
+  return (
+    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center relative font-sans">
+      <Header 
+        length={secretLength}
+        onOpenHelp={() => setIsHelpOpen(true)}
+        onOpenTip={() => setIsTipOpen(true)}
+      />
+
+      <main className="flex-grow flex flex-col items-center w-full max-w-lg px-2 pb-12">
+
+        <div className="flex-1 flex flex-col justify-center items-center w-full py-4">
+          <div className="text-center animate-in fade-in slide-in-from-top-4 duration-700">
+            <p className="text-gray-400 text-sm uppercase tracking-widest mb-1">
+              Convierte este número a Hexadecimal
+            </p>
+              <span className="text-5xl font-mono font-bold text-blue-400">
+                {targetNumber || "..."}
+              </span>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center w-full pb-8">
+          <Grid 
+            guesses={guesses} 
+            currentGuess={currentGuess} 
+            turn={turn} 
+            feedbackHistory={feedbackHistory}
+            length={secretLength}
+            cursorPos={cursorPos}
+            onCellClick={handleCellClick}
+          />
+        
+          <div className="mt-6 w-full">
+            <Keyboard onChar={handleChar} onDelete={handleDelete} onEnter={handleEnter} />
+          </div>
+        </div>
+
       </main>
 
-      <footer className='bg-gray-950 p-20'>
-        <Keyboard/>
-      </footer>
+      <Modal 
+        isOpen={gameStatus !== 'PLAYING'} 
+        hasWon={gameStatus === 'WON'}
+        secretCode={secretCode}
+        onClose={() => window.location.reload()}
+      />
+
+      <HelpModal 
+        isOpen={isHelpOpen} 
+        onClose={() => setIsHelpOpen(false)} 
+      />
+
+      <TipModal 
+        isOpen={isTipOpen} onClose={() => setIsTipOpen(false)} 
+        targetNumber={targetNumber}
+        />
     </div>
+    
   );
-};
+}
 
 export default App;
